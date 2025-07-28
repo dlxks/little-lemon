@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&family=Markazi+Text:wght@400;500;600&display=swap');
+
+@import "tailwindcss";
+@import "./colors.css";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary-dark: #495E57;
+  --primary-light: #F4CE14;
+  --secondar-first: #4e4a48;
+  --secondar-second: #FBDABB;
+  --secondar-third: #EDEFEE;
+  --secondar-fourth: #333333;
+}
+
+.karla {
+  font-family: 'Karla', sans-serif;
+}
+
+.markazi {
+  font-family: 'Markazi Text', serif;
+}
+
+@layer base {
+  body {
+    font-family: 'Karla', sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: 'Markazi Text', serif;
+  }
+}
