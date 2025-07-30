@@ -16,9 +16,10 @@
   font-family: var(--font-karla), sans-serif
 }
 
-.markazi {
-  font-family: var(--font-markazi), serif;
+.merriweather {
+  font-family: var(--font-merriweather), sans-serif
 }
+
 
 @layer base {
   body {
@@ -30,7 +31,7 @@
   h1,
   h2,
   h3 {
-    font-family: 'Markazi Text', serif;
+    font-family: 'Merriweather ', serif;
   }
 }
 
@@ -38,19 +39,108 @@ section {
   padding: 4ch 0;
 }
 
-/* ===== HERO SECTION ===== */
-.hero-title {
-  font-size: 5.5rem;
-  font-weight: 500;
+
+/* BUBBLE EFFECT */
+.hover_color_bubble {
+  position: absolute;
+  background: rgba(73, 94, 87, 0.5);
+  width: 35rem;
+  height: 50rem;
+  left: -25rem;
+  top: 25rem;
+  border-radius: 50%;
+  transform: rotate(-36deg);
+  z-index: -1;
+  transition: 0.7s;
 }
 
-.hero-sub {
-  font-size: 3rem;
-  position: relative;
-  transform: translate(0, -25px);
+.special-item:hover .hover_color_bubble {
+  background: rgba(73, 94, 87, 0.3);
+  top: 0;
 }
 
-.hero-desc {
-  position: relative;
-  transform: translate(0, -25px);
+
+/* ===== ANIMATIONS ===== */
+/* Motorcycle drive */
+@keyframes drive {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(150px);
+    opacity: 0;
+  }
+}
+
+/* Wipe on hover animation for button */
+.group:hover .group-hover\:animate-drive {
+  animation: drive 0.3s linear forwards;
+}
+
+@keyframes wipe-glow {
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+.wipe-hover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.wipe-hover:hover::after {
+  animation: wipe-glow 1s ease-out infinite;
+}
+
+/* Testimonials Infinite Scroll */
+@keyframes scroll-horizontal-loop {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.scroll-loop {
+  animation: scroll-horizontal-loop 30s linear infinite;
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.scroll-loop:active {
+  animation-play-state: paused;
+}
+
+.testimonial-item:hover {
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

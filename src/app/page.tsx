@@ -1,31 +1,36 @@
-import Footer from "@/components/Footer";
+import { Button } from "@headlessui/react";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
+import Link from "next/link";
+import { testimonials } from "@/data/testimonials";
+import { dishes } from "@/data/dishes";
 
 export default function Home() {
   return (
     <>
-      <section className="flex items-center justify-center bg-olive-500">
+      <section className="hero bg-olive-500 ">
         <div className="hero-container relative container mx-auto max-w-7xl px-2 py-9 sm:px-6 lg:px-8 flex flex-col-reverse lg:flex-row items-center justify-between">
-          <article className="text-white max-w-xl z-10 lg:pl-8">
-            <h1 className="hero-title text-5xl font-bold text-lemon-500 font-markazi leading-snug">
+          <article className="text-white max-w-full lg:max-w-xl z-10 md:pl-8">
+            <h1 className="relative hero-title text-5xl font-bold text-lemon-500 font-markazi leading-snug">
               Little Lemon
             </h1>
-            <h3 className="hero-sub text-3xl font-semibold text-white font-markazi mb-4">
+            <h3 className="relative hero-sub text-3xl font-semibold text-white font-markazi mb-4">
               Chicago
             </h3>
-            <p className="hero-desc leading-relaxed font-karla text-white mb-6">
+            <p className="relative hero-desc leading-relaxed font-karla text-white mb-6 ">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
               type and scrambled it to make a type specimen book.
             </p>
-            <button className="bg-lemon-500 hover:bg-lemon-600 text-charcoal-900 font-bold py-2 px-4 rounded transition duration-300 cursor-pointer">
+            <Button className="text-lg font-bold py-3 px-6 rounded-full shadow text-charcoal-700 bg-lemon-500 hover:text-olive-900 hover:bg-mist-500 shadow-charcoal-500 transition duration-150 cursor-pointer flex place-items-center">
               Reserve a table
-            </button>
+              <Icon icon="fa7-solid:utensils" className="text-lg ml-1" />
+            </Button>
           </article>
           <div className="place-content-center">
-            <div className="absolute bottom-[-90px] lg:right-[275px] z-0 w-70">
-              <div className="relative mask mask-square h-120 lg:h-120 w-70 lg:w-120 transition-all duration-300">
+            <div className="absolute bottom-[-70px] right-[10px] sm:right-[30px] md:right-[140px] lg:right-[200px]  z-0 w-70">
+              <div className="relative mask mask-square h-100 lg:h-110 w-70 md:w-90 lg:w-100 transition-all duration-300">
                 <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20 lg:hidden rounded-xl z10"></div>
                 <Image
                   src="/assets/restauranfood.jpg"
@@ -41,8 +46,209 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="highlights h-[500px] container mx-auto">
-        <div className="hero-container container mx-auto max-w-7xl px-2 py-[45px] sm:px-6 lg:px-8"></div>
+      <section className="highlights mt-[70px]">
+        <div className="container mx-auto max-w-7xl px-2 md:px-4 lg:px-8 my-8">
+          <div className="flex items-center justify-between">
+            <h1 className="text-3xl md:text-4xl font-bold text-olive-500">
+              This Week's Specials!
+            </h1>
+            <div>
+              <Button className="text-charcoal-900 bg-lemon-500 hover:bg-olive-600 hover:text-white  font-bold shadow shadow-charcoal-500 py-3 px-4 rounded-full transition duration-150 cursor-pointer flex place-items-center">
+                Order Online
+                <Icon icon="fa7-solid:cart-shopping" className="text-lg ml-1" />
+              </Button>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap py-8 gap-8 justify-around">
+            {[...dishes].map((dish, index) => (
+              <div
+                key={index}
+                className="special-item relative group overflow-hidden  max-w-sm bg-mist-500 border border-gray-200 rounded-t-xl shadow-sm hover:scale-105 transition-all duration-300"
+              >
+                <a href="#">
+                  <Image
+                    className="rounded-t-lg"
+                    src={dish.image}
+                    width={1920}
+                    height={1024}
+                    alt="Greek Saad"
+                    priority
+                  />
+                </a>
+                <div className="p-5">
+                  <div className="flex justify-between merriweather">
+                    <a href="#">
+                      <h5 className="mb-2 text-2xl font-bold text-olive-500">
+                        {dish.name}
+                      </h5>
+                    </a>
+                    <p className="text-xl md:text-2xl font-bold text-peach-500">
+                      {dish.price}
+                    </p>
+                  </div>
+                  <p className="mb-3 font-normal text-charcoal-400 px-4 group-hover:text-charcoal-500 transition-all duration-300">
+                    {dish.description}
+                  </p>
+                  <Link
+                    href="#"
+                    className="group relative inline-flex items-center font-medium  py-1 px-4 rounded-full bg-olive-500 text-white overflow-hidden wipe-hover transition-all duration-300"
+                  >
+                    <span className="relative z-10 flex items-center">
+                      Order for delivery
+                    </span>
+                    <Icon
+                      icon="ic:round-delivery-dining"
+                      className="text-2xl ml-1 z-10 transition-transform duration-300 group-hover:translate-x-1"
+                    />
+                  </Link>
+                </div>
+                {/* Bubble background on hover */}
+                <div className="hover_color_bubble"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="testimonials bg-olive-200">
+        <div className="container mx-auto max-w-7xl px-2 md:px-4 lg:px-8 my-8">
+          <h1 className="text-4xl font-bold text-olive-500 flex place-content-center">
+            Testimonials
+          </h1>
+
+          <div className="relative overflow-hidden my-8">
+            <div className=" pointer-events-none absolute inset-y-0 left-0 w-15 bg-gradient-to-r from-olive-200 to-transparent z-10" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-15 bg-gradient-to-l from-olive-200 to-transparent z-10" />
+
+            <div className="scroll-loop flex gap py-6 px-8">
+              {[...testimonials, ...testimonials].map((testimonial, index) => (
+                <div
+                  key={index}
+                  className="testimonial-item shrink-0 w-80 mx-4 rounded-lg shadow bg-mist-200 text-charcoal-500"
+                >
+                  <a href="#">
+                    <img
+                      className="p-8 rounded-t-lg"
+                      src={testimonial.img}
+                      alt={testimonial.name}
+                    />
+                  </a>
+                  <div className="px-5 pb-5">
+                    <a href="#">
+                      <h5 className="text-xl font-semibold tracking-tight">
+                        {testimonial.name}
+                      </h5>
+                    </a>
+                    <div className="flex items-center mt-2.5 mb-5">
+                      <div className="flex items-center space-x-1 rtl:space-x-reverse">
+                        {[...Array(testimonial.rating)].map((_, i) => (
+                          <Icon
+                            key={i}
+                            icon="bi:star-fill"
+                            className="text-lemon-500"
+                          />
+                        ))}
+                      </div>
+                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-sm ms-3">
+                        {testimonial.rating}.0
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-md italic">
+                        "{testimonial.testimonial}"
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="about py-[40px] overflow-hidden">
+        <div className="container mx-auto max-w-7xl px-2 md:px-4 lg:px-8 my-8">
+          <div className="flex flex-wrap items-center justify-between -mx-4">
+            {/* Left side */}
+            <div className="w-full px-4 lg:w-6/12">
+              <div className="flex items-center -mx-3 sm:-mx-4">
+                {/* Left image */}
+                <div className="w-full px-3 sm:px-4 xl:w-1/2">
+                  <div className="py-3 sm:py-4">
+                    <img
+                      src="/assets/Mario and Adrian A.jpg"
+                      alt="Mario and Adrian A"
+                      className="rounded-2xl shadow-sm/20"
+                    />
+                  </div>
+                  <div className="py-3 sm:py-4">
+                    <img
+                      src="/assets/Mario and Adrian b.jpg"
+                      alt="Mario and Adrian B"
+                      className="rounded-2xl shadow-sm/20"
+                    />
+                  </div>
+                </div>
+                {/* Right image */}
+                <div className="w-full px-3 sm:px-4 xl:w-1/2">
+                  <div className="relative z-10 my-4">
+                    <img
+                      src="/assets/restaurant chef B.jpg"
+                      alt="Adrian"
+                      className="rounded-2xl shadow-sm/20"
+                    />
+                    <span className="absolute -right-8 -bottom-8 z-[-1]">
+                      <Icon
+                        icon="arcticons:dots-and-co"
+                        className="text-charcoal-400 text-[7rem]"
+                      />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Right side */}
+            <div className="w-full px-4 lg:w-1/2 xl:w-5/12">
+              <div className="mt-10 lg:mt-0">
+                <span className="block mb-4 text-lg font-semibold text-primary">
+                  Know more about us!
+                </span>
+                <h2 className="mb-5 text-3xl font-bold text-olive-500 sm:text-[40px]/[48px]">
+                  Little Lemon
+                </h2>
+
+                <p className="mb-5 text-base text-body-color dark:text-dark-6">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </p>
+                <p className="mb-5 text-base text-body-color dark:text-dark-6">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum.
+                </p>
+
+                <Link
+                  href="#"
+                  className="inline-flex items-center justify-center py-3 text-base font-bold text-center text-charcoal-500 border border-transparent rounded-full shadow-sm shadow-charcoal-500 px-7 bg-lemon-500 hover:bg-olive-500 hover:text-mist-500 transition duration-150"
+                >
+                  Read More
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </>
   );

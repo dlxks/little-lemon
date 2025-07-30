@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
+import { Karla, Merriweather } from "next/font/google";
 import "./styles/globals.css";
-import Footer from "@/components/Footer";
-import Nav from "@/components/Nav";
-import { Karla, Markazi_Text } from "next/font/google";
+import ClientLayout from "./ClientLayout";
 
 const karla = Karla({
   subsets: ["latin"],
@@ -12,11 +11,12 @@ const karla = Karla({
   variable: "--font-karla",
 });
 
-const markazi = Markazi_Text({
+export const merriweather = Merriweather({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  variable: "--font-merriweather",
+  weight: ["300", "400", "700", "900"],
+  style: ["normal", "italic"],
   display: "swap",
-  variable: "--font-markazi",
 });
 
 export const metadata: Metadata = {
@@ -44,16 +44,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className={`${karla.variable} ${markazi.variable}`}>
-      <body className="flex flex-col min-h-screen">
-        <Nav />
-        <main className="flex-grow">{children}</main>
-        <Footer />
-      </body>
+    <html lang="en" className={`${karla.variable} ${merriweather.variable} `}>
+      <ClientLayout>{children}</ClientLayout>
     </html>
   );
 }
