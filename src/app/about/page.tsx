@@ -84,7 +84,7 @@ const About = () => {
       <section className="pb-12 pt-20 lg:pb-[90px] lg:pt-[120px]">
         <div className="container mx-auto">
           <div className="mb-24">
-            <div className="-flex flex-wrap items-center justify-center">
+            <div className="flex flex-wrap items-center justify-center">
               <div className="w-full px-4 lg:w-1/2 2xl:w-5/12">
                 <div className="max-w-[465px] lg:mb-0">
                   <span className="mb-4 block text-lg font-semibold text-olive-500 md:text-2xl">

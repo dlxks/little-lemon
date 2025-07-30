@@ -5,7 +5,7 @@ import { navLinks } from "@/data/navLinks";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Button } from "@headlessui/react";
+import { Button } from "flowbite-react";
 
 function classNames(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");
@@ -19,17 +19,17 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="stick">
+      <nav>
         <div className="container mx-auto max-w-7xl px-2 sm:px-6 md:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute z-40">
               <div className="md:hidden">
-                <Button
+                <button
                   onClick={toggleMenu}
-                  className="text-2xl ml-1 p-2 cursor-pointer hover:p-2 hover:rounded-full hover:bg-olive-500 hover:text-white transition-all duration-300 "
+                  className="text-2xl ml-1 p-2 cursor-pointer hover:p-2 hover:rounded-full hover:bg-olive-500 hover:text-white transition-all duration-300"
                 >
                   <Icon icon="bi:list" />
-                </Button>
+                </button>
               </div>
             </div>
             <div className="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
@@ -69,12 +69,12 @@ const Navbar = () => {
               </div>
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
-              <Button
+              <button
                 type="button"
                 className="py-2 px-5 me-2 mb-2 text-sm font-bold uppercase cursor-pointer text-white bg-olive-500 focus:outline-none rounded-full shadow shadow-charcoal-500 hover:bg-lemon-500 hover:text-charcoal-500 transition-all duration-300 ease-in-out"
               >
                 Login
-              </Button>
+              </button>
             </div>
           </div>
         </div>
@@ -95,12 +95,12 @@ const Navbar = () => {
               priority
             />
           </Link>
-          <Button
+          <button
             onClick={toggleMenu}
             className="text-xl hover:text-sm cursor-pointer hover:p-2 hover:rounded-full hover:bg-olive-500 hover:text-white hover:translate-x-1 transition-all duration-300"
           >
             <Icon icon="bi:x-lg" />
-          </Button>
+          </button>
         </div>
         <div className="p-6 space-y-4">
           {navLinks.map((link) => {

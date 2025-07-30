@@ -1,4 +1,6 @@
+@plugin "flowbite-react/plugin/tailwindcss";
 @import "tailwindcss";
+@source "../../../.flowbite-react/class-list.json";
 @import "./colors.css";
 
 :root {

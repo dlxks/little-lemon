@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@headlessui/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,10 +26,10 @@ export default function Home() {
               ever since the 1500s, when an unknown printer took a galley of
               type and scrambled it to make a type specimen book.
             </p>
-            <Button className="text-lg font-bold py-3 px-6 rounded-full shadow text-charcoal-700 bg-lemon-500 hover:text-olive-900 hover:bg-mist-500 shadow-charcoal-500 transition duration-150 cursor-pointer flex place-items-center">
+            <button className="text-lg font-bold py-3 px-6 rounded-full shadow text-charcoal-700 bg-lemon-500 hover:text-olive-900 hover:bg-mist-500 shadow-charcoal-500 transition duration-150 cursor-pointer flex place-items-center">
               Reserve a table
               <Icon icon="fa7-solid:utensils" className="text-lg ml-1" />
-            </Button>
+            </button>
           </article>
           <div className="place-content-center">
             <div className="absolute bottom-[-70px] right-[10px] sm:right-[30px] md:right-[140px] lg:right-[200px]  z-0 w-70">

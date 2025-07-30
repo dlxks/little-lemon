@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { Icon } from "@iconify/react";
 import { testimonials } from "@/data/testimonials";
 import Image from "next/image";
-import { Button } from "@headlessui/react";
+import { Button } from "flowbite-react";
 
 export default function TestimonialSlider() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -88,20 +88,21 @@ export default function TestimonialSlider() {
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center gap-3">
-        <Button
+        <button
           aria-label="Scroll left"
           onClick={() => scroll("left")}
           className="flex h-12 w-12 items-center justify-center bg-white text-dark shadow-lg transition-all hover:bg-mist-500 hover:cursor-pointer"
         >
           <Icon icon="fa7-solid:arrow-left" />
-        </Button>
-        <Button
+        </button>
+
+        <button
           aria-label="Scroll right"
           onClick={() => scroll("right")}
           className="flex h-12 w-12 items-center justify-center bg-white text-dark shadow-lg transition-all hover:bg-mist-500 hover:cursor-pointer"
         >
           <Icon icon="fa7-solid:arrow-right" />
-        </Button>
+        </button>
       </div>
     </div>
   );
