@@ -1,9 +1,13 @@
+"use client";
+
 import { Button } from "@headlessui/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
 import Link from "next/link";
 import { testimonials } from "@/data/testimonials";
 import { dishes } from "@/data/dishes";
+import { useState } from "react";
+import TestimonialSlider from "@/components/TestimonialSlider";
 
 export default function Home() {
   return (
@@ -53,10 +57,13 @@ export default function Home() {
               This Week's Specials!
             </h1>
             <div>
-              <Button className="text-charcoal-900 bg-lemon-500 hover:bg-olive-600 hover:text-white  font-bold shadow shadow-charcoal-500 py-3 px-4 rounded-full transition duration-150 cursor-pointer flex place-items-center">
-                Order Online
-                <Icon icon="fa7-solid:cart-shopping" className="text-lg ml-1" />
-              </Button>
+              <Link
+                href="/menu"
+                className="text-charcoal-900 bg-lemon-500 hover:bg-olive-600 hover:text-white  font-bold shadow shadow-charcoal-500 py-3 px-4 rounded-full transition duration-150 cursor-pointer flex place-items-center"
+              >
+                Explore More
+                <Icon icon="mingcute:search-fill" className="text-lg ml-1" />
+              </Link>
             </div>
           </div>
 
@@ -66,7 +73,7 @@ export default function Home() {
                 key={index}
                 className="special-item relative group overflow-hidden  max-w-sm bg-mist-500 border border-gray-200 rounded-t-xl shadow-sm hover:scale-105 transition-all duration-300"
               >
-                <a href="#">
+                <Link href="#">
                   <Image
                     className="rounded-t-lg"
                     src={dish.image}
@@ -75,14 +82,14 @@ export default function Home() {
                     alt="Greek Saad"
                     priority
                   />
-                </a>
+                </Link>
                 <div className="p-5">
                   <div className="flex justify-between merriweather">
-                    <a href="#">
+                    <Link href="#">
                       <h5 className="mb-2 text-2xl font-bold text-olive-500">
                         {dish.name}
                       </h5>
-                    </a>
+                    </Link>
                     <p className="text-xl md:text-2xl font-bold text-peach-500">
                       {dish.price}
                     </p>
@@ -113,57 +120,23 @@ export default function Home() {
 
       <section className="testimonials bg-olive-200">
         <div className="container mx-auto max-w-7xl px-2 md:px-4 lg:px-8 my-8">
-          <h1 className="text-4xl font-bold text-olive-500 flex place-content-center">
-            Testimonials
-          </h1>
-
-          <div className="relative overflow-hidden my-8">
-            <div className=" pointer-events-none absolute inset-y-0 left-0 w-15 bg-gradient-to-r from-olive-200 to-transparent z-10" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-15 bg-gradient-to-l from-olive-200 to-transparent z-10" />
-
-            <div className="scroll-loop flex gap py-6 px-8">
-              {[...testimonials, ...testimonials].map((testimonial, index) => (
-                <div
-                  key={index}
-                  className="testimonial-item shrink-0 w-80 mx-4 rounded-lg shadow bg-mist-200 text-charcoal-500"
-                >
-                  <a href="#">
-                    <img
-                      className="p-8 rounded-t-lg"
-                      src={testimonial.img}
-                      alt={testimonial.name}
-                    />
-                  </a>
-                  <div className="px-5 pb-5">
-                    <a href="#">
-                      <h5 className="text-xl font-semibold tracking-tight">
-                        {testimonial.name}
-                      </h5>
-                    </a>
-                    <div className="flex items-center mt-2.5 mb-5">
-                      <div className="flex items-center space-x-1 rtl:space-x-reverse">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <Icon
-                            key={i}
-                            icon="bi:star-fill"
-                            className="text-lemon-500"
-                          />
-                        ))}
-                      </div>
-                      <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-sm ms-3">
-                        {testimonial.rating}.0
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-md italic">
-                        "{testimonial.testimonial}"
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+          <div className="-mx-4 flex flex-wrap justify-center">
+            <div className="w-full px-4">
+              <div className="mx-auto max-w-[510px] text-center">
+                <span className="mb-2 block text-lg font-semibold text-primary">
+                  Testimonials
+                </span>
+                <h2 className="mb-3 text-3xl font-bold leading-[1.2] text-charcoal-500 sm:text-4xl md:text-[40px]">
+                  What our Customer Says
+                </h2>
+                <p className="text-base text-body-color dark:text-dark-6">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+                </p>
+              </div>
             </div>
           </div>
+
+          <TestimonialSlider />
         </div>
       </section>
 
@@ -176,27 +149,36 @@ export default function Home() {
                 {/* Left image */}
                 <div className="w-full px-3 sm:px-4 xl:w-1/2">
                   <div className="py-3 sm:py-4">
-                    <img
+                    <Image
                       src="/assets/Mario and Adrian A.jpg"
                       alt="Mario and Adrian A"
                       className="rounded-2xl shadow-sm/20"
+                      height={1080}
+                      width={720}
+                      priority
                     />
                   </div>
                   <div className="py-3 sm:py-4">
-                    <img
+                    <Image
                       src="/assets/Mario and Adrian b.jpg"
                       alt="Mario and Adrian B"
                       className="rounded-2xl shadow-sm/20"
+                      height={1080}
+                      width={720}
+                      priority
                     />
                   </div>
                 </div>
                 {/* Right image */}
                 <div className="w-full px-3 sm:px-4 xl:w-1/2">
                   <div className="relative z-10 my-4">
-                    <img
+                    <Image
                       src="/assets/restaurant chef B.jpg"
                       alt="Adrian"
                       className="rounded-2xl shadow-sm/20"
+                      height={1080}
+                      width={720}
+                      priority
                     />
                     <span className="absolute -right-8 -bottom-8 z-[-1]">
                       <Icon
@@ -240,7 +222,7 @@ export default function Home() {
                 </p>
 
                 <Link
-                  href="#"
+                  href="/about"
                   className="inline-flex items-center justify-center py-3 text-base font-bold text-center text-charcoal-500 border border-transparent rounded-full shadow-sm shadow-charcoal-500 px-7 bg-lemon-500 hover:bg-olive-500 hover:text-mist-500 transition duration-150"
                 >
                   Read More

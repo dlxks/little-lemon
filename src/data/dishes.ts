@@ -11,7 +11,7 @@ export const dishes = [
     name: "Bruschetta",
     price: '$5.99',
     description: "Bruschetta is an Italian appetizer consisting of grilled bread topped with garlic, olive oil, and salt. Most commonly it is served with toppings of tomatoes, vegetables, beans, cured meat or cheese.",
-    image: "/assets/bruchetta.jpg"
+    image: "/assets/bruschetta.jpg"
   },
   {
     id: 3,

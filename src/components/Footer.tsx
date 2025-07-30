@@ -1,6 +1,7 @@
 import { navLinks } from "@/data/navLinks";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -25,7 +26,7 @@ const Footer = () => {
                     key={item.name}
                     className="text-md text-olive-500 hover:text-olive-700 mb-2"
                   >
-                    <a href={item.href}>{item.name}</a>
+                    <Link href={item.href}>{item.name}</Link>
                   </li>
                 ))}
               </ul>
