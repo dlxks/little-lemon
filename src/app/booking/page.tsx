@@ -2,16 +2,13 @@
 
 import BookingForm from "@/components/BookingForm";
 import Toast from "@/components/Toast";
+import { timesReducer } from "@/lib/timesReducer";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
 import Link from "next/link";
-import { useReducer, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 const allTimes = ["5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM"];
-
-function updateTimes(state: string[], selectedDate: string): string[] {
-  return allTimes;
-}
 
 function initializeTimes(): string[] {
   return allTimes;
@@ -23,9 +20,8 @@ const BookingPage = () => {
     message: string;
   } | null>(null);
 
-  const [availableTimes, dispatch] = useReducer(
-    (state: string[], action: { type: "update"; date: string }) =>
-      updateTimes(state, action.date),
+  const [availableTimes, dispatchTimes] = useReducer(
+    timesReducer,
     [],
     initializeTimes
   );
@@ -59,9 +55,9 @@ const BookingPage = () => {
               </h3>
 
               <BookingForm
-                setToast={setToast}
                 availableTimes={availableTimes}
-                dispatchTimes={dispatch}
+                dispatchTimes={dispatchTimes}
+                setToast={setToast}
               />
             </div>
 

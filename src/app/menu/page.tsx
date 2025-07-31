@@ -38,13 +38,16 @@ const Menu = () => {
 
                 <div className="w-full px-4 lg:w-1/3">
                   <div className="mb-[60px] lg:mb-20 lg:text-right">
-                    <button className="inline-flex items-center text-charcoal-900 bg-lemon-500 hover:bg-olive-500 hover:text-mist-500 font-bold shadow shadow-charcoal-500 py-3 px-4 rounded-full transition duration-150 cursor-pointer">
-                      Order Online
+                    <Link
+                      href="/order_online"
+                      className="inline-flex items-center text-charcoal-900 bg-lemon-500 hover:bg-olive-500 hover:text-mist-500 font-bold shadow shadow-charcoal-500 py-3 px-4 rounded-full transition duration-150 cursor-pointer"
+                    >
+                      Order Now
                       <Icon
                         icon="mdi:cart"
                         className="ml-2 transform transition duration-300 group-hover:scale-110"
                       />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

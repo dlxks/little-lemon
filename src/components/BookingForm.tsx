@@ -1,4 +1,5 @@
 import useDebounce from "@/hooks/useDebounce";
+import formatTime from "@/utils/formatTime";
 import {
   ChangeEvent,
   Dispatch,
@@ -7,6 +8,8 @@ import {
   useEffect,
   useState,
 } from "react";
+import BookingConfirmationModal from "./ConfirmedBooking";
+import { submitAPI } from "@/lib/api";
 
 // Define variable types of inputs
 type BookingFormData = {
@@ -51,6 +54,25 @@ type BookingFormProps = {
   dispatchTimes: Dispatch<{ type: "update"; date: string }>;
 };
 
+const FIXED_TIMES = [
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:30",
+  "18:00",
+  "18:30",
+  "19:00",
+  "19:30",
+  "20:00",
+  "20:30",
+  "21:00",
+  "21:30",
+  "22:00",
+  "22:30",
+  "23:00",
+];
+
 const BookingForm = ({
   setToast,
   availableTimes,
@@ -60,8 +82,24 @@ const BookingForm = ({
   const [formData, setFormData] = useState<BookingFormData>(defaultFormData);
   const [errors, setErrors] = useState<BookingFormErrors>({});
 
+  // Define data array
+  const [bookingData, setBookingData] = useState<BookingFormData[]>([]);
+
+  // Retrieve data from local storage
+  useEffect(() => {
+    const reservationsList = localStorage.getItem("bookingData");
+    if (reservationsList) {
+      setBookingData(JSON.parse(reservationsList));
+    }
+  }, []);
+
   // Call debounce hook
-  const debouncedData = useDebounce(formData, 1000);
+  const debouncedFormData = useDebounce(formData, 1000);
+  useEffect(() => {
+    if (debouncedFormData.date) {
+      dispatchTimes({ type: "update", date: debouncedFormData.date });
+    }
+  }, [debouncedFormData.date, dispatchTimes]);
 
   // Handle user input
   const handleChange = (
@@ -75,12 +113,9 @@ const BookingForm = ({
     }));
 
     setErrors((prev) => ({ ...prev, [name]: "" }));
-
-    if (name === "date") {
-      dispatchTimes({ type: "update", date: value });
-    }
   };
 
+  // Validate input fields
   const validate = () => {
     const newErrors: BookingFormErrors = {};
 
@@ -95,7 +130,7 @@ const BookingForm = ({
 
     if (!formData.phone.trim()) {
       newErrors.phone = "Contact number is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    } else if (!/^\d{3}-\d{3}-\d{4}$/.test(formData.phone)) {
       newErrors.phone = "Phone must be in format 123-456-7890.";
     }
 
@@ -110,7 +145,11 @@ const BookingForm = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  // Modal confirmation of reservation
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
+
+  // Handles form submit function
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     // Validate inputs on submit
@@ -119,19 +158,48 @@ const BookingForm = ({
       return;
     }
 
-    // Save to localStorage
-    localStorage.setItem("bookingForm", JSON.stringify(formData));
-    setToast({ type: "success", message: "Reservation has been submitted!" });
-    console.log("Submitted: ", formData);
+    // Check for conflict of date and time
+    const hasConflict = bookingData.some(
+      (booking) =>
+        booking.date === formData.date && booking.time === formData.time
+    );
 
-    setFormData(defaultFormData);
-    setErrors({});
+    if (hasConflict) {
+      setToast({
+        type: "error",
+        message:
+          "Selected date and time already has a reservation. Please choose a different time",
+      });
+      return;
+    }
+
+    const success = await submitAPI(formData);
+    if (success) {
+      const updatedData = [...bookingData, formData];
+      setBookingData(updatedData);
+      localStorage.setItem("bookingData", JSON.stringify(updatedData));
+
+      setFormData(defaultFormData);
+      setErrors({});
+      setIsConfirmationOpen(true);
+    } else {
+      setToast({
+        type: "error",
+        message: "Submission failed. Please try again.",
+      });
+    }
   };
 
   const renderError = (field: keyof BookingFormData): ReactNode =>
     errors[field] ? (
       <p className="text-sm text-red-500 mt-1">{errors[field]}</p>
     ) : null;
+
+  const isTimeDisabled = (time: string): boolean => {
+    return bookingData.some(
+      (booking) => booking.date === formData.date && booking.time === time
+    );
+  };
 
   return (
     <>
@@ -141,7 +209,7 @@ const BookingForm = ({
         noValidate
       >
         <h2 id="booking-form-heading" className="sr-only">
-          Reservation Form
+          Make Your Reservation
         </h2>
         <div className="-mx-3 flex flex-wrap">
           <div className="w-full px-3 sm:w-1/2">
@@ -312,6 +380,7 @@ const BookingForm = ({
               {renderError("date")}
             </div>
           </div>
+
           <div className="w-full px-3 sm:w-1/2">
             <div className="mb-5">
               <label
@@ -331,11 +400,16 @@ const BookingForm = ({
                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-charcoal-500 outline-none focus:border-lemon-500 focus:shadow-md"
               >
                 <option value="" disabled>
-                  Choose available times
+                  Choose available time
                 </option>
-                {availableTimes.map((time) => (
-                  <option key={time} value={time}>
-                    {time}
+                {FIXED_TIMES.map((time) => (
+                  <option
+                    key={time}
+                    value={time}
+                    disabled={isTimeDisabled(time)}
+                  >
+                    {formatTime(time)}{" "}
+                    {isTimeDisabled(time) ? "(Unavailable)" : ""}
                   </option>
                 ))}
               </select>
@@ -402,6 +476,10 @@ const BookingForm = ({
           </button>
         </div>
       </form>
+      <BookingConfirmationModal
+        show={isConfirmationOpen}
+        onClose={() => setIsConfirmationOpen(false)}
+      />
     </>
   );
 };
