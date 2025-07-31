@@ -88,7 +88,7 @@ const About = () => {
               <div className="w-full px-4 lg:w-1/2 2xl:w-5/12">
                 <div className="max-w-[465px] lg:mb-0">
                   <span className="mb-4 block text-lg font-semibold text-olive-500 md:text-2xl">
-                    Meet
+                    Meet Our Chef
                   </span>
                   <h2 className="mb-5 text-2xl font-bold !leading-tight text-charcoal-500 xl:text-4xl">
                     Adrian
@@ -137,7 +137,7 @@ const About = () => {
               <div className="w-full px-4 lg:w-1/2 2xl:w-5/12">
                 <div className="mb-12 max-w-[465px] lg:mb-0">
                   <span className="mb-4 block text-lg font-semibold text-olive-500 md:text-2xl">
-                    Meet
+                    Meet Our Chef
                   </span>
                   <h2 className="mb-5 text-2xl font-bold !leading-tight text-charcoal-500 xl:text-4xl">
                     Mario

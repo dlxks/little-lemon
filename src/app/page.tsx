@@ -3,7 +3,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
 import Link from "next/link";
-import { testimonials } from "@/data/testimonials";
 import { dishes } from "@/data/dishes";
 import { useState } from "react";
 import TestimonialSlider from "@/components/TestimonialSlider";
@@ -11,38 +10,61 @@ import TestimonialSlider from "@/components/TestimonialSlider";
 export default function Home() {
   return (
     <>
-      <section className="hero bg-olive-500 ">
-        <div className="hero-container relative container mx-auto max-w-7xl px-2 py-9 sm:px-6 lg:px-8 flex flex-col-reverse lg:flex-row items-center justify-between">
-          <article className="text-white max-w-full lg:max-w-xl z-10 md:pl-8">
-            <h1 className="relative hero-title text-5xl font-bold text-lemon-500 font-markazi leading-snug">
-              Little Lemon
-            </h1>
-            <h3 className="relative hero-sub text-3xl font-semibold text-white font-markazi mb-4">
-              Chicago
-            </h3>
-            <p className="relative hero-desc leading-relaxed font-karla text-white mb-6 ">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </p>
-            <button className="text-lg font-bold py-3 px-6 rounded-full shadow text-charcoal-700 bg-lemon-500 hover:text-olive-900 hover:bg-mist-500 shadow-charcoal-500 transition duration-150 cursor-pointer flex place-items-center">
-              Reserve a table
-              <Icon icon="fa7-solid:utensils" className="text-lg ml-1" />
-            </button>
-          </article>
-          <div className="place-content-center">
-            <div className="absolute bottom-[-70px] right-[10px] sm:right-[30px] md:right-[140px] lg:right-[200px]  z-0 w-70">
-              <div className="relative mask mask-square h-100 lg:h-110 w-70 md:w-90 lg:w-100 transition-all duration-300">
-                <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/20 lg:hidden rounded-xl z10"></div>
-                <Image
-                  src="/assets/restauranfood.jpg"
-                  alt="Appetizer platter"
-                  width={300}
-                  height={300}
-                  className="w-full h-full object-cover rounded-xl shadow-[2px_2px_5px_rgba(0,0,0,0.7)] lg:shadow-[2px_2px_10px_rgba(0,0,0,0.7)]"
-                  priority
-                />
+      <section className="overflow-hidden py-12 lg:py-[-90px] bg-olive-500 ">
+        <div className="hero-container container mx-auto max-w-7xl px-2 py-9 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-between">
+            <div className="w-full px-4 lg:w-1/2 mb-16 md:mb-0">
+              <div className="md:mt-10 lg:mt-0">
+                <h1 className="relative hero-title text-5xl font-bold text-lemon-500 font-markazi leading-snug">
+                  Little Lemon
+                </h1>
+                <h3 className="relative hero-sub text-3xl font-semibold text-white font-markazi mb-4">
+                  Chicago
+                </h3>
+                <p className="relative hero-desc leading-relaxed font-karla text-white mb-6 ">
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type and scrambled it to make a type
+                  specimen book.
+                </p>
+
+                <Link
+                  href="/reservations"
+                  aria-label="Reserve a table at Little Lemon"
+                  className="inline-flex items-center text-charcoal-900 bg-lemon-500 hover:bg-mist-500 hover:text-charcoal-500 font-bold shadow shadow-charcoal-500 py-3 px-4 rounded-full transition duration-150 cursor-pointer"
+                >
+                  Reserve a table
+                  <Icon icon="fa7-solid:utensils" className="text-lg ml-2" />
+                </Link>
+              </div>
+            </div>
+            <div className="w-full px-4 lg:w-6/12">
+              <div className="relative mx-auto flex h-[500px] max-w-[440px]">
+                <div className="absolute left-0 z-30 mr-14 max-width-[270px] rounded-lg">
+                  <div className="relative mask mask-square h-100 w-70">
+                    <Image
+                      src="/assets/restaurant.jpg"
+                      alt="Appetizer platter"
+                      width={300}
+                      height={300}
+                      className="w-full h-full object-cover rounded-xl shadow-[2px_2px_5px_rgba(0,0,0,0.7)] lg:shadow-[2px_2px_10px_rgba(0,0,0,0.7)]"
+                      priority
+                    />
+                  </div>
+                </div>
+                <div className="absolute right-0 top-20 z-30 ml-14 max-w-[300px] rounded-lg">
+                  <div className="relative mask mask-square h-100 w-70">
+                    <Image
+                      src="/assets/restauranfood.jpg"
+                      alt="Appetizer platter"
+                      width={300}
+                      height={300}
+                      className="w-full h-full object-cover rounded-xl shadow-[2px_2px_5px_rgba(0,0,0,0.7)] lg:shadow-[2px_2px_10px_rgba(0,0,0,0.7)]"
+                      priority
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -58,10 +80,10 @@ export default function Home() {
             <div>
               <Link
                 href="/menu"
-                className="text-charcoal-900 bg-lemon-500 hover:bg-olive-600 hover:text-white  font-bold shadow shadow-charcoal-500 py-3 px-4 rounded-full transition duration-150 cursor-pointer flex place-items-center"
+                className="inline-flex items-center text-charcoal-900 bg-lemon-500 hover:bg-olive-500 hover:text-mist-500 font-bold shadow shadow-charcoal-500 py-3 px-4 rounded-full transition duration-150 cursor-pointer"
               >
                 Explore More
-                <Icon icon="mingcute:search-fill" className="text-lg ml-1" />
+                <Icon icon="mingcute:search-fill" className="text-lg ml-2" />
               </Link>
             </div>
           </div>
@@ -105,7 +127,7 @@ export default function Home() {
                     </span>
                     <Icon
                       icon="ic:round-delivery-dining"
-                      className="text-2xl ml-1 z-10 transition-transform duration-300 group-hover:translate-x-1"
+                      className="text-2xl ml-2 z-10 transition-transform duration-300 group-hover:translate-x-1"
                     />
                   </Link>
                 </div>

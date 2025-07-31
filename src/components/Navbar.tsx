@@ -26,7 +26,7 @@ const Navbar = () => {
               <div className="md:hidden">
                 <button
                   onClick={toggleMenu}
-                  className="text-2xl ml-1 p-2 cursor-pointer hover:p-2 hover:rounded-full hover:bg-olive-500 hover:text-white transition-all duration-300"
+                  className="text-2xl ml-2 p-2 cursor-pointer hover:p-2 hover:rounded-full hover:bg-olive-500 hover:text-white transition-all duration-300"
                 >
                   <Icon icon="bi:list" />
                 </button>

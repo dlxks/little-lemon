@@ -1,40 +1,94 @@
 import Image from "next/image";
+import { reservations } from "@/data/reservations";
+import { p } from "framer-motion/client";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import Link from "next/link";
 
 const Reservations = () => {
   return (
     <>
       <section className="overflow-hidden py-12 lg:py-[-90px]">
-        <div className="container mx-auto">
+        <div className="container mx-auto max-w-7xl px-2 md:px-4 lg:px-8 my-8">
+          <div className="flex items-center justify-between mb-8">
+            <h1 className="text-2xl md:text-3xl font-bold text-olive-500">
+              See Our Reservations
+            </h1>
+            <Link
+              href="/booking"
+              className="inline-flex items-center text-charcoal-900 bg-lemon-500 hover:bg-olive-500 hover:text-mist-500 font-bold shadow shadow-charcoal-500 py-3 px-4 rounded-full transition duration-150 cursor-pointer"
+            >
+              Make Reservation
+              <Icon icon="mdi:utensils-variant" className="text-lg ml-2" />
+            </Link>
+          </div>
+
           <div className="flex flex-wrap items-center justify-between">
-            <div className="w-full px-4 lg:w-6/12">
-              <div className="relative mx-auto flex h-[500px] max-w-[440px]">
-                <div className="absolute left-0 z-30 mr-14 max-width-[270px] rounded-lg">
-                  <Image
-                    alt="about image"
-                    src="/assets/men2.jpg"
-                    width={240}
-                    height={240}
-                    className="rounded-lg w-full"
-                  />
-                </div>
-                <div className="absolute right-0 top-20 z-30 ml-14 max-w-[300px] rounded-lg">
-                  <Image
-                    alt="about image"
-                    src="/assets/men2.jpg"
-                    width={240}
-                    height={240}
-                    className="rounded-lg w-full"
-                  />
-                </div>
+            <div className="w-full px-4 lg:w-6/12 mb-8 md:mb-0">
+              <div className="relative mask mask-square h-120 w-w-full">
+                <Image
+                  alt="about image"
+                  src="/assets/table.jpg"
+                  width={1920}
+                  height={1080}
+                  className="w-full h-full object-cover rounded-xl shadow-md shadow-charcoal-500"
+                />
               </div>
             </div>
-            <div className="w-full px-4 lg:w-1/2 2xl:w-5/12">
+            <div className="w-full px-4 lg:w-1/2">
               <div className="md:mt-10 lg:mt-0">
-                <h1 className="text-2xl md:text-3xl">
-                  Make your Reservations Now!
-                </h1>
+                <div className="place-items-center my-4">
+                  <div className="w-full max-w-md p-4 bg-olive-500 rounded-lg shadow-sm sm:p-8">
+                    <div className="flex items-center justify-between mb-4">
+                      <h5 className="text-xl font-bold leading-none text-mist-500">
+                        Latest Reservations
+                      </h5>
+                    </div>
+                    <div className="flow-root">
+                      <ul role="list" className="divide-y divide-mist-200 ">
+                        {reservations.map((reservation, index) => {
+                          const reservationDate = new Date(
+                            reservation.date
+                          ).toLocaleDateString("en-US", {
+                            weekday: "long",
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          });
 
-                <form></form>
+                          return (
+                            <li
+                              key={index}
+                              className="py-3 sm:py-4 text-mist-300"
+                            >
+                              <div className="flex items-center">
+                                <div className="shrink-0">
+                                  <Icon
+                                    icon="bi:calendar-check"
+                                    className="w-7 h-7"
+                                  />
+                                </div>
+                                <div className="flex-1 min-w-0 ms-4">
+                                  <p className="text-sm font-medium truncate ">
+                                    {reservation.name}
+                                  </p>
+                                  <p className="text-sm text-mist-700">
+                                    No. of people:{" "}
+                                    <span className="font-bold">
+                                      {reservation.people}
+                                    </span>
+                                  </p>
+                                </div>
+                                <div className="inline-flex items-center text-base font-medium text-lemon-500 italic">
+                                  {reservationDate}
+                                </div>
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
