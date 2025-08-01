@@ -1,6 +1,6 @@
 "use client";
 
-import BookingForm from "@/components/BookingForm";
+import BookingForm from "@/components/BookingForm/BookingForm";
 import Toast from "@/components/Toast";
 import { timesReducer } from "@/lib/timesReducer";
 import { Icon } from "@iconify/react/dist/iconify.js";

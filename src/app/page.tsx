@@ -1,10 +1,7 @@
-"use client";
-
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
 import Link from "next/link";
 import { dishes } from "@/data/dishes";
-import { useState } from "react";
 import TestimonialSlider from "@/components/TestimonialSlider";
 
 export default function Home() {

@@ -1,4 +1,3 @@
-import { Modal, ModalBody, ModalFooter, ModalHeader } from "flowbite-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type BookingConfirmationModalProps = {

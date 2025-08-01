@@ -20,11 +20,12 @@ const Footer = () => {
               />
             </div>
             <div>
+              <h3 className="karla text-xl font-black mb-2">Links</h3>
               <ul>
                 {navLinks.map((item) => (
                   <li
                     key={item.name}
-                    className="text-md text-olive-500 hover:text-olive-700 mb-2"
+                    className="text-md text-olive-500 hover:text-olive-700 mb-1"
                   >
                     <Link href={item.href}>{item.name}</Link>
                   </li>

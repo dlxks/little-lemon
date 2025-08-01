@@ -1,109 +1,127 @@
 "use client";
 
-import { useRef } from "react";
-import { Icon } from "@iconify/react";
 import { testimonials } from "@/data/testimonials";
+import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
-import { Button } from "flowbite-react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { div } from "framer-motion/client";
 
-export default function TestimonialSlider() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const scroll = (direction: "left" | "right") => {
-    if (!scrollRef.current) return;
-
-    const container = scrollRef.current;
-    const card = container.querySelector(".testimonial-item") as HTMLElement;
-    const cardWidth = card?.offsetWidth + 32 || 352; // 32 = mx-4
-
-    const start = container.scrollLeft;
-    const distance = direction === "left" ? -cardWidth : cardWidth;
-    const duration = 300;
-    const startTime = performance.now();
-
-    const animateScroll = (currentTime: number) => {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      container.scrollLeft = start + distance * easeInOutCubic(progress);
-
-      if (progress < 1) {
-        requestAnimationFrame(animateScroll);
-      }
-    };
-
-    requestAnimationFrame(animateScroll);
+const TestimonialSlider = () => {
+  const settings = {
+    dots: true,
+    dotsClass: "slick-dots",
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 2,
+    arrows: false,
+    autoplay: true,
+    cssEase: "linear",
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 800,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: false,
+        },
+      },
+    ],
   };
 
-  function easeInOutCubic(t: number) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const halfStars = rating % 1 >= 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStars;
 
+    return (
+      <>
+        {Array(fullStars)
+          .fill(null)
+          .map((_, i) => (
+            <Icon
+              key={`full-${i}`}
+              icon="tabler:star-filled"
+              className="text-lemon-500 text-xl inline-block"
+            />
+          ))}
+
+        {halfStars > 0 && (
+          <Icon
+            key="half"
+            icon="tabler:star-half-filled"
+            className="text-lemon-500 text-xl inline-block"
+          />
+        )}
+
+        {Array(emptyStars)
+          .fill(null)
+          .map((_, i) => (
+            <Icon
+              key={`empty-${i}`}
+              icon="tabler:star-filled"
+              className="text-charcoal-400 text-xl inline-block"
+            />
+          ))}
+      </>
+    );
+  };
   return (
-    <div className="relative flex justify-center">
-      <div className="relative w-full pb-16 py-8 overflow-hidden">
-        <div
-          ref={scrollRef}
-          className="flex-no-wrap snap-x snap-mandatory mx-auto flex h-auto py-8 w-full overflow-x-auto scroll-smooth xs:max-w-[480px] sm:max-w-[540px] md:max-w-[720px] lg:max-w-[960px] xl:max-w-[1140px] 2xl:max-w-[1320px] scrollbar-hide will-change-scroll"
-        >
-          {[...testimonials].map((testimonial, index) => (
-            <div
-              key={index}
-              className="testimonial-item shrink-0 snap-start w-80 mx-4 rounded-lg shadow bg-mist-200 text-charcoal-500"
-            >
-              <div className="px-5 py-5">
-                <div className="flex flex-col items-center">
-                  <div className="w-24 h-24 items-center mask mask-circle">
-                    <Image
-                      className="w-full h-full object-cover mb-3 rounded-full shadow-lg"
-                      src={testimonial.img}
-                      alt={testimonial.name}
-                      height={1080}
-                      width={720}
-                      priority
-                    />
-                  </div>
-                </div>
-                <h5 className="text-xl font-semibold tracking-tight text-center">
-                  {testimonial.name}
-                </h5>
-                <div className="flex items-center mt-2.5 mb-5 justify-center">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Icon
-                      key={i}
-                      icon="bi:star-fill"
-                      className="text-lemon-500"
-                    />
-                  ))}
-                  <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-sm ms-3">
-                    {testimonial.rating}.0
-                  </span>
-                </div>
-                <p className="text-md italic text-center">
-                  "{testimonial.testimonial}"
-                </p>
+    <Slider {...settings}>
+      {testimonials.map((testimonial, index) => (
+        <div key={index}>
+          <div
+            className={`bg-white rounded-2xl m-4 p-5 my-20 relative ${
+              index % 2 ? "shadow-lg/30" : "shadow-2xl/20"
+            }`}
+          >
+            <div className="absolute top-[-45px]">
+              <div className="w-18 h-18 items-center mask mask-circle border-2 rounded-full border-white shadow-md">
+                <Image
+                  src={testimonial.img}
+                  alt={testimonial.name}
+                  width={100}
+                  height={100}
+                  className="w-full h-full object-cover mb-3 rounded-full shadow-lg"
+                />
               </div>
             </div>
-          ))}
+            <h4 className="text-base font-normal text-darkgray my-4">
+              {testimonial.testimonial}
+            </h4>
+            <div className="flex justify-between testimonial-center">
+              <div>
+                <h3 className="text-lg font-medium text-darkbrown pt-4 pb-2">
+                  {testimonial.name}
+                </h3>
+              </div>
+              <div className="flex">{renderStars(testimonial.rating)}</div>
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div className="absolute bottom-0 left-0 right-0 flex items-center justify-center gap-3">
-        <button
-          aria-label="Scroll left"
-          onClick={() => scroll("left")}
-          className="flex h-12 w-12 items-center justify-center bg-white text-dark shadow-lg transition-all hover:bg-mist-500 hover:cursor-pointer"
-        >
-          <Icon icon="fa7-solid:arrow-left" />
-        </button>
-
-        <button
-          aria-label="Scroll right"
-          onClick={() => scroll("right")}
-          className="flex h-12 w-12 items-center justify-center bg-white text-dark shadow-lg transition-all hover:bg-mist-500 hover:cursor-pointer"
-        >
-          <Icon icon="fa7-solid:arrow-right" />
-        </button>
-      </div>
-    </div>
+      ))}
+    </Slider>
   );
-}
+};
+
+export default TestimonialSlider;

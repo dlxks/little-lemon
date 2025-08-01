@@ -1,91 +1,34 @@
-import useDebounce from "@/hooks/useDebounce";
-import formatTime from "@/utils/formatTime";
 import {
-  ChangeEvent,
-  Dispatch,
-  FormEvent,
-  ReactNode,
-  useEffect,
-  useState,
-} from "react";
-import BookingConfirmationModal from "./ConfirmedBooking";
+  BookingFormData,
+  BookingFormErrors,
+  BookingFormProps,
+} from "@/components/BookingForm/BookingForm.types";
+
+import {
+  FIXED_TIMES,
+  defaultFormData,
+} from "@/components/BookingForm/constants";
+
+import {
+  validateForm,
+  hasTimeConflict,
+} from "@/components/BookingForm/formUtils";
+
+import BookingConfirmationModal from "@/components/BookingConfirmationModal";
+
+import { useEffect, useState, ChangeEvent, FormEvent, ReactNode } from "react";
+import useDebounce from "@/hooks/useDebounce";
 import { submitAPI } from "@/lib/api";
-
-// Define variable types of inputs
-type BookingFormData = {
-  fName: string;
-  lName: string;
-  email: string;
-  phone: string;
-  date: string;
-  time: string;
-  guest: number;
-  occasion: string;
-  confirmation: string;
-};
-
-// Define type of errors
-type BookingFormErrors = {
-  [K in keyof BookingFormData]?: string;
-};
-
-// Set default form data
-const defaultFormData: BookingFormData = {
-  fName: "",
-  lName: "",
-  email: "",
-  phone: "",
-  date: "",
-  time: "",
-  guest: 1,
-  occasion: "",
-  confirmation: "",
-};
-
-// Set toast from parent
-type ToastType = {
-  type: "success" | "error";
-  message: string;
-};
-
-type BookingFormProps = {
-  setToast: (toast: ToastType | null) => void;
-  availableTimes: string[];
-  dispatchTimes: Dispatch<{ type: "update"; date: string }>;
-};
-
-const FIXED_TIMES = [
-  "15:00",
-  "15:30",
-  "16:00",
-  "16:30",
-  "17:30",
-  "18:00",
-  "18:30",
-  "19:00",
-  "19:30",
-  "20:00",
-  "20:30",
-  "21:00",
-  "21:30",
-  "22:00",
-  "22:30",
-  "23:00",
-];
 
 const BookingForm = ({
   setToast,
   availableTimes,
   dispatchTimes,
 }: BookingFormProps) => {
-  // Save form data to state and local storage
   const [formData, setFormData] = useState<BookingFormData>(defaultFormData);
   const [errors, setErrors] = useState<BookingFormErrors>({});
-
-  // Define data array
   const [bookingData, setBookingData] = useState<BookingFormData[]>([]);
 
-  // Retrieve data from local storage
   useEffect(() => {
     const reservationsList = localStorage.getItem("bookingData");
     if (reservationsList) {
@@ -93,7 +36,6 @@ const BookingForm = ({
     }
   }, []);
 
-  // Call debounce hook
   const debouncedFormData = useDebounce(formData, 1000);
   useEffect(() => {
     if (debouncedFormData.date) {
@@ -101,70 +43,29 @@ const BookingForm = ({
     }
   }, [debouncedFormData.date, dispatchTimes]);
 
-  // Handle user input
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
+    setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  // Validate input fields
-  const validate = () => {
-    const newErrors: BookingFormErrors = {};
-
-    if (!formData.fName.trim()) newErrors.fName = "First name is required";
-    if (!formData.lName.trim()) newErrors.lName = "Last name is required";
-
-    if (!formData.email.trim()) {
-      newErrors.email = "Email address is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address.";
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Contact number is required";
-    } else if (!/^\d{3}-\d{3}-\d{4}$/.test(formData.phone)) {
-      newErrors.phone = "Phone must be in format 123-456-7890.";
-    }
-
-    if (!formData.date) newErrors.date = "Please choose a date";
-    if (!formData.time) newErrors.time = "Please choose the time you prefer";
-    if (!formData.occasion)
-      newErrors.occasion = "Please choose the occasion for reservation";
-    if (!formData.confirmation)
-      newErrors.confirmation = "Please select an option";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  // Modal confirmation of reservation
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 
-  // Handles form submit function
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // Validate inputs on submit
-    if (!validate()) {
+    const isValid = validateForm(formData);
+    setErrors(isValid);
+
+    if (Object.keys(isValid).length > 0) {
       setToast({ type: "error", message: "Please fix errors above" });
       return;
     }
 
-    // Check for conflict of date and time
-    const hasConflict = bookingData.some(
-      (booking) =>
-        booking.date === formData.date && booking.time === formData.time
-    );
-
-    if (hasConflict) {
+    const conflict = hasTimeConflict(bookingData, formData);
+    if (conflict) {
       setToast({
         type: "error",
         message:
@@ -178,7 +79,6 @@ const BookingForm = ({
       const updatedData = [...bookingData, formData];
       setBookingData(updatedData);
       localStorage.setItem("bookingData", JSON.stringify(updatedData));
-
       setFormData(defaultFormData);
       setErrors({});
       setIsConfirmationOpen(true);
@@ -195,10 +95,16 @@ const BookingForm = ({
       <p className="text-sm text-red-500 mt-1">{errors[field]}</p>
     ) : null;
 
-  const isTimeDisabled = (time: string): boolean => {
-    return bookingData.some(
+  const isTimeDisabled = (time: string): boolean =>
+    bookingData.some(
       (booking) => booking.date === formData.date && booking.time === time
     );
+
+  const formatTime = (time: string) => {
+    const [hour, minute] = time.split(":").map(Number);
+    const ampm = hour >= 12 ? "PM" : "AM";
+    const formattedHour = hour % 12 || 12;
+    return `${formattedHour}:${minute.toString().padStart(2, "0")} ${ampm}`;
   };
 
   return (
@@ -465,8 +371,6 @@ const BookingForm = ({
                 No
               </label>
             </div>
-
-            {renderError("confirmation")}
           </div>
         </fieldset>
 
