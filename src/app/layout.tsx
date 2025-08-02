@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Karla, Merriweather } from "next/font/google";
 import "./styles/globals.css";
-import ClientLayout from "./ClientLayout";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { ModalProvider } from "./context/ViewMenuModalContext";
+import { CartProvider } from "./context/CartContext";
 
 const karla = Karla({
   subsets: ["latin"],
@@ -20,6 +23,9 @@ export const merriweather = Merriweather({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/favicon.png",
+  },
   title: "Little Lemon Restaurant",
   description: "This is the Little Lemon Restaurant Website",
   openGraph: {
@@ -48,8 +54,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${karla.variable} ${merriweather.variable} `}>
-      <ClientLayout>{children}</ClientLayout>
+    <html lang="en" className={`${karla.variable} ${merriweather.variable}`}>
+      <body className="flex flex-col min-h-screen">
+        <CartProvider>
+          <ModalProvider>
+            <Navbar />
+            <main className="flex-grow mt-15">{children}</main>
+            <Footer />
+          </ModalProvider>
+        </CartProvider>
+      </body>
     </html>
   );
 }

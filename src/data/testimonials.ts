@@ -46,4 +46,49 @@ export const testimonials: {
       title: "Fast, Friendly, and Flavorful",
       testimonial: "Great service, quick seating, and incredible food! I'm always impressed with how consistent and delicious everything is. Even the simplest dishes feel elevated. The lemon herb chicken is a personal favorite."
     },
+    {
+      id: 6,
+      name: "Tony B., Lincoln Park, IL",
+      img: "/assets/men2.jpg",
+      rating: 4,
+      title: "Fresh and Flavorful",
+      testimonial:
+        "The freshness of the ingredients blew me away. The grilled salmon with lemon dill sauce is my absolute favorite. Light yet satisfying. It’s become part of my weekly routine."
+    },
+    {
+      id: 7,
+      name: "Rachel K., Skokie, IL",
+      img: "/assets/women1.jpg",
+      rating: 5,
+      title: "Great for Gatherings",
+      testimonial:
+        "Hosted a small birthday dinner here and everyone loved it! The staff made us feel welcome, and the food was a hit with everyone—from picky eaters to foodies."
+    },
+    {
+      id: 8,
+      name: "Daniel C., Hyde Park, IL",
+      img: "/assets/men3.jpg",
+      rating: 4,
+      title: "Charming & Delicious",
+      testimonial:
+        "Little Lemon has that old-world charm I crave. The baklava was flaky perfection, and the lemon mint tea sealed the deal. It’s like a little Mediterranean escape in the city."
+    },
+    {
+      id: 9,
+      name: "Nina S., Rogers Park, IL",
+      img: "/assets/women2.jpg",
+      rating: 5,
+      title: "Vegetarian Heaven",
+      testimonial:
+        "As a vegetarian, it’s hard to find places that go beyond basic salads. Little Lemon offers so many delicious veggie-forward options! The roasted veggie flatbread is a dream."
+    },
+    {
+      id: 10,
+      name: "Carlos M., Wicker Park, IL",
+      img: "/assets/men2.jpg",
+      rating: 5,
+      title: "A Flavor Explosion",
+      testimonial:
+        "Every bite is a burst of Mediterranean sunshine. The lemon garlic hummus and pita are addictive, and the grilled lamb was melt-in-your-mouth good. I’ll be back for sure!"
+    }
   ];

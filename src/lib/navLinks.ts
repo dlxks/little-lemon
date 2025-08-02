@@ -4,4 +4,4 @@ export const navLinks = [
   { name: "Menu", href: "/menu", },
   { name: "Reservations", href: "/reservations", },
   { name: "Order Now", href: "/order_now", },
-];
+]; 

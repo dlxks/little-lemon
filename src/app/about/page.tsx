@@ -1,6 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Image from "next/image";
-import Link from "next/link";
 
 const About = () => {
   return (
@@ -10,7 +9,7 @@ const About = () => {
           <div className="flex flex-wrap items-center justify-between">
             {/* Left side */}
             <div className="w-full px-4 lg:w-6/12">
-              <div className="flex items-center -mx-3 sm:-mx-4">
+              <div className="flex items-center -mx-3 sm:">
                 {/* Left image */}
                 <div className="w-full px-3 sm:px-4 xl:w-1/2">
                   <div className="py-3 sm:py-4">

@@ -1,4 +1,4 @@
-import { navLinks } from "@/data/navLinks";
+import { navLinks } from "@/lib/navLinks";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
 import Link from "next/link";

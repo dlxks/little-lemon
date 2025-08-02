@@ -29,22 +29,24 @@ const Reservations = () => {
   }, []);
 
   return (
-    <section className="overflow-hidden py-12 lg:py-[-90px]">
-      <div className="container mx-auto max-w-7xl px-2 md:px-4 lg:px-8 my-8">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-2xl md:text-3xl font-bold text-olive-500">
-            See Our Reservations
-          </h1>
-          <Link
-            href="/booking"
-            className="inline-flex items-center text-charcoal-900 bg-lemon-500 hover:bg-olive-500 hover:text-mist-500 font-bold shadow shadow-charcoal-500 py-3 px-4 rounded-full transition duration-150 cursor-pointer"
-          >
-            Make Reservation
-            <Icon icon="mdi:utensils-variant" className="text-lg ml-2" />
-          </Link>
-        </div>
+    <section className="about py-[40px] overflow-hidden">
+      <div className="container mx-auto max-w-7xl px-2 md:px-4 lg:px-8">
+        <section className="bg-white">
+          <div className="flex items-center justify-between">
+            <h2 className="text-charcoal-500 mb-4 text-3xl font-bold md:leading-[45px] md:text-[38px]">
+              See our reservations!
+            </h2>
+            <Link
+              href="/booking"
+              className="inline-flex items-center text-charcoal-900 bg-lemon-500 hover:bg-olive-500 hover:text-mist-500 font-bold shadow shadow-charcoal-500 py-3 px-4 rounded-full transition duration-150 cursor-pointer"
+            >
+              Make Reservation
+              <Icon icon="mdi:utensils-variant" className="text-lg ml-2" />
+            </Link>
+          </div>
+        </section>
 
-        <div className="flex flex-wrap items-center justify-between">
+        <section className="bg-white flex flex-wrap items-center justify-between">
           <div className="w-full px-4 lg:w-6/12 mb-8 md:mb-0">
             <div className="relative mask mask-square h-120 w-full">
               <Image
@@ -132,7 +134,7 @@ const Reservations = () => {
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </section>
   );

@@ -1,11 +1,12 @@
 "use client";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
-import { navLinks } from "@/data/navLinks";
+import { navLinks } from "@/lib/navLinks";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Button } from "flowbite-react";
+import { useCart } from "@/app/context/CartContext";
+import CartDrawer from "./OrderNow/CartDrawer";
 
 function classNames(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");
@@ -16,6 +17,13 @@ const Navbar = () => {
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
   const pathName = usePathname();
+  const {
+    cartItems,
+    cartQuantity,
+    isOpen: isCartOpen,
+    openCart,
+    closeCart,
+  } = useCart();
 
   return (
     <>
@@ -70,11 +78,24 @@ const Navbar = () => {
             </div>
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
               <button
-                type="button"
+                onClick={openCart}
+                className="relative p-2 text-2xl text-charcoal-500 hover:text-olive-500 transition duration-300"
+                aria-label="Open cart"
+              >
+                <Icon icon="bi:cart" />
+                {cartQuantity > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-lemon-500 text-white text-xs font-bold rounded-full px-1.5 py-0.5">
+                    {cartQuantity}
+                  </span>
+                )}
+              </button>
+
+              {/* <Link
+                href=""
                 className="py-2 px-5 me-2 mb-2 text-sm font-bold uppercase cursor-pointer text-white bg-olive-500 focus:outline-none rounded-full shadow shadow-charcoal-500 hover:bg-lemon-500 hover:text-charcoal-500 transition-all duration-300 ease-in-out"
               >
                 Login
-              </button>
+              </Link> */}
             </div>
           </div>
         </div>
@@ -130,6 +151,8 @@ const Navbar = () => {
           onClick={toggleMenu}
         ></div>
       )}
+
+      {isCartOpen && <CartDrawer isOpen={isCartOpen} onClose={closeCart} />}
     </>
   );
 };
